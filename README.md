@@ -50,8 +50,6 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=你的publishable_key
 npm run lint
 npm run typecheck
 npm run build
-# 安装 Playwright 的 Chromium，首次浏览器测试需要。
-npx playwright install chromium
 npm test
 # 以下两项需要已配置的真实 Supabase 测试项目及两个测试账号。
 npm run test:e2e
@@ -59,6 +57,7 @@ npm run test:isolation
 ```
 
 - `npm run check` 顺序执行 lint、typecheck、build。
+- 浏览器测试默认复用本机 Chrome，并使用独立临时配置，不读取个人浏览器资料。本机 Chrome 已验证可由 Playwright 启动，无需下载 Chromium。其他机器可设置 `PLAYWRIGHT_CHANNEL=msedge` 复用 Edge；只有没有可用浏览器或需要固定 Playwright 浏览器版本时，才执行 `npx playwright install chromium` 并设置 `PLAYWRIGHT_CHANNEL=chromium`。
 - `npm test` 验证首页、账号入口和未登录访问保护；不证明真实账号与数据库可用。
 - `npm run test:e2e` 验证新账号注册、错误密码、伪造会话、保存、刷新、双账号隔离、删除和退出。每次运行会保留一个 `pick-e2e-* @example.com` 的一次性 Auth 用户，后续可在测试项目控制台人工清理；不发送邮件，不使用管理员密钥自动删账号。
 - `npm run test:isolation` 直接调用数据 API，检查匿名拒绝、双账号独立数据、伪造归属拒绝、跨用户删除无效、禁止更新、本人可删除。只清理本次生成 ID 的记录，不清空任何用户数据。

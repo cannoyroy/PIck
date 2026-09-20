@@ -17,6 +17,7 @@ export default defineConfig({
   use: {
     baseURL,
     ...devices["Desktop Chrome"],
+    channel: process.env.PLAYWRIGHT_CHANNEL || "chrome",
     // Auth traces could include credentials and session tokens. Do not save them.
     trace: "off",
     screenshot: "off",
