@@ -7,7 +7,14 @@ if (!target || !target.startsWith("https://")) {
   process.exit(2);
 }
 // No session or bypass header: verify the external protection independently.
-const response = await fetch(target, { redirect: "manual" });
+let response;
+try {
+  response = await fetch(target, { redirect: "manual" });
+} catch (error) {
+  const code = error?.cause?.code || error?.code || error?.name || "unknown error";
+  console.error(`BLOCKED: could not reach the deployment (${code}); no protection result was obtained.`);
+  process.exit(2);
+}
 const location = response.headers.get("location") || "";
 const vercelLogin = location.startsWith("https://vercel.com/") && /(?:login|sso)/.test(location);
 const body = await response.text();

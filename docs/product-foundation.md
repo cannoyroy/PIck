@@ -45,7 +45,7 @@ PIck 面向保研、留学等找导师场景，首先服务项目负责人的真
 
 ## 当前阶段与准备状态
 
-当前处于最小工程底座实施阶段。用户已确认一次“选型—确认—搭建—验证”的任务，不再将准备工作拆成独立研究阶段。
+最小工程底座已于 2026-09-21 完成“选型—确认—搭建—验证”。下一阶段从用户提出的首个具体业务功能开始，不再以完善底座为独立任务。
 
 已完成的准备：
 
@@ -65,13 +65,13 @@ PIck 面向保研、留学等找导师场景，首先服务项目负责人的真
 
 真实服务检查：Supabase 测试项目、邮箱密码认证与数据库迁移已配置。用户用两个测试账号完成注册、登录、保存、刷新和退出，并确认双方记录相互不可见。`npm run test:isolation` 连接真实数据 API 后四组检查全部通过：双方只能读写自己的临时记录；匿名 SELECT/INSERT/UPDATE/DELETE 被拒绝；伪造归属、跨用户删除和所有 UPDATE 被拒绝；本人删除成功。脚本仅清理本次随机 ID 的临时记录。
 
-云端准备：Vercel CLI 已登录并将本地目录关联到 `qianjiayus-projects/pi-ck`；Preview 环境已配置 Supabase URL 与 publishable key。本地 Vercel 关联文件和凭据继续由 Git 忽略。
+云端验证：Vercel 项目为 `qianjiayus-projects/pi-ck`，受保护的 Production 测试地址为 `https://pi-ck.vercel.app`。Preview 与 Production 环境均已配置 Supabase URL 与 publishable key，Deployment Protection 的 Vercel Authentication 已覆盖 All Deployments。本地 Vercel 关联文件和凭据继续由 Git 忽略。
 
-仍待完成：尚未创建 Preview 部署地址；Vercel 访问保护和部署后的完整流程未验证。下一步只继续云端测试部署，不重新选型或扩展底座。
+用户已在云端实际完成登录、私有记录保存与读取、退出，并在无痕窗口确认未登录 Vercel 的访问者会被拦截并要求登录 Vercel。自动保护检查也已执行，但运行环境连接该地址时在收到 HTTP 响应前发生 Node `UND_ERR_CONNECT_TIMEOUT`；因此自动检查记录为网络受阻，不冒充通过，人工保护检查已通过。
 
 代码写入不等于运行通过。工程说明中的命令用途和外部操作见 [README](../README.md)，此处只记录实际阶段状态。书籍内容仍未提供，产品方法条目与首个找导师业务任务仍未确定。
 
-底座范围完成后结束基础建设；后续基础设施由实际业务需求驱动。AI 开发实践随开发按需补充，不作为独立研究项目。
+底座范围已完成，基础建设到此结束；后续基础设施由实际业务需求驱动。AI 开发实践随开发按需补充，不作为独立研究项目。
 
 ## 开放问题
 

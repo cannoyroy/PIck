@@ -68,12 +68,12 @@ npm run test:isolation
 
 ## 云端测试部署
 
-以下步骤需要 Vercel 账号与 CLI 授权；项目状态中会区分是否实际执行。不要把说明当作已部署证明。
+当前 Vercel 项目为 `qianjiayus-projects/pi-ck`，受保护的云端测试地址为 https://pi-ck.vercel.app 。它使用 Production 部署槽位，但因 Vercel Authentication 覆盖 All Deployments，仍是受限测试环境，并未向普通用户开放。
 
-1. 在项目目录运行 `npx vercel login`，由账号持有人完成登录，再运行 `npx vercel link`，创建名为 `pick-test` 的个人 Hobby 项目，项目根目录选当前目录，框架选 Next.js。不选择升级或付费资源。
-2. 在 Vercel 项目配置中设置 Node.js 22，并给 Preview 环境添加上面两个 `NEXT_PUBLIC_SUPABASE_*` 变量。不上传测试账号密码、数据库密码或 Supabase 管理密钥。`vercel.json` 已指定 Functions 使用 Singapore（`sin1`），部署时检查平台实际应用了该设置。
+1. 在项目目录运行 `npx vercel login`，由账号持有人完成登录，再运行 `npx vercel link` 关联个人 Hobby 项目，项目根目录选当前目录，框架选 Next.js。不选择升级或付费资源。
+2. 在 Vercel 项目配置中设置 Node.js 22，并给 Preview 和 Production 环境添加上面两个 `NEXT_PUBLIC_SUPABASE_*` 变量。不上传测试账号密码、数据库密码或 Supabase 管理密钥。`vercel.json` 已指定 Functions 使用 Singapore（`sin1`），部署时检查平台实际应用了该设置。
 3. 在 Deployment Protection 启用 **Vercel Authentication → All Deployments**，不启用付费的 Password Protection。不把 `noindex` 或隐藏网址当作访问保护。
-4. 运行 `npx vercel` 创建测试部署，保存真实返回的地址。不运行 `--prod`，不绑定正式域名，不公开推广。
+4. 运行 `npx vercel` 创建部署并保存真实返回的地址。Vercel 可能把项目的首次部署直接分配为 Production；环境名称不等于公开程度，须以访问保护的实际验证为准。修改 Production 环境变量后运行 `npx vercel --prod` 重新构建。
 5. 账号持有人登录 Vercel 后打开该地址，人工验证注册、登录、测试记录和退出。
 6. 自动化云端验证时，把部署 URL 填入本地 `TEST_BASE_URL`，并把该项目用于自动化的 protection bypass secret 填入本地 `VERCEL_AUTOMATION_BYPASS_SECRET`。该 secret 只用于测试工具，不放到应用环境变量或代码中。
 
@@ -87,6 +87,8 @@ npm run test:isolation
 `test:deployment` 不带登录或 bypass，检查测试地址拒绝匿名进入；浏览器测试仅向该部署的源站发送一次 bypass 请求以获取测试 Cookie，不向 Supabase 发送 bypass header。控制台中还需确认保护范围确实是 All Deployments。
 
 `TEST_BASE_URL` 设定后浏览器测试使用云端，不启动本地 3100 服务器。数据隔离脚本始终使用 `.env.local` 指定的 Supabase 项目；请核对它与部署使用的是同一个测试项目。
+
+GitHub 到 Vercel 的自动部署目前是可选项；连接后推送 `main` 可能触发 Production 部署，应在确实需要自动发布时再启用。Supabase 当前也不需要连接 GitHub，数据库结构以仓库中的迁移文件记录并按需人工应用。
 
 ## 凭据与交付
 
