@@ -10,5 +10,8 @@ test-results/
 *.tsbuildinfo
 supabase/.temp/
 supabase/.branches/
+.venv-wiki/
+wiki/site/
+wiki/.cache/
 npm-debug.log*
 .DS_Store

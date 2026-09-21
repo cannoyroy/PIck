@@ -13,6 +13,13 @@ The upstream license is reproduced below. This notice does not assign an
 open-source license to PIck's original code. Package dependencies retain their
 own licenses in the installed packages.
 
+## MkDocs and Material for MkDocs
+
+The Wiki uses the pinned packages in `wiki/requirements.txt`. MkDocs is
+distributed under the BSD 2-Clause license. Material for MkDocs is distributed
+under the MIT license. The project does not copy their source code; the
+packages are installed as build dependencies for the Markdown Wiki.
+
 ## Next.js starter and shadcn/ui — MIT
 
 The MIT License (MIT)

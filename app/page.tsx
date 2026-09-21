@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { hasSupabaseConfig } from "@/lib/env";
 
 export default function HomePage() {
+  const wikiUrl = process.env.NEXT_PUBLIC_WIKI_URL || "http://127.0.0.1:8000";
   return (
     <section className="space-y-7 py-10">
       <p className="text-sm font-medium tracking-widest text-primary">PIck / 工程测试</p>
@@ -12,6 +13,7 @@ export default function HomePage() {
         <Button asChild><Link href="/auth/login">登录</Link></Button>
         <Button asChild variant="outline"><Link href="/auth/sign-up">注册</Link></Button>
         <Button asChild variant="ghost"><Link href="/protected">我的测试记录</Link></Button>
+        <Button asChild variant="ghost"><a href={wikiUrl}>科研论 Wiki</a></Button>
       </nav>
       {!hasSupabaseConfig() && <p role="status" className="rounded-lg border bg-card p-4 text-sm">服务尚未配置，注册和登录暂不可用。维护者请按 README 配置 Supabase 后重启应用。</p>}
     </section>

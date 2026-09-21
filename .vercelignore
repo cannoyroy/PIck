@@ -1,0 +1,11 @@
+# Local dependencies and generated artifacts are not deployment source files.
+node_modules/
+.next/
+.tmp/
+.venv-wiki/
+wiki/site/
+playwright-report/
+test-results/
+.env.local
+.vercel/
+wiki/.vercel/

@@ -1,6 +1,6 @@
 # PIck
 
-面向保研、留学等场景的找导师项目。当前只搭建工程测试底座：邮箱密码账号、受保护页面、私有测试记录。不包含导师业务模型或产品方法论 Wiki。
+面向保研、留学等场景的找导师项目。当前包含工程测试底座和 Wiki 技术底座，不包含导师业务模型或完整产品方法论内容。
 
 ## 技术与运行边界
 
@@ -30,6 +30,7 @@ npm run dev
 ```dotenv
 NEXT_PUBLIC_SUPABASE_URL=https://你的项目引用.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=你的publishable_key
+NEXT_PUBLIC_WIKI_URL=http://127.0.0.1:8000
 ```
 
 不要填入 secret key / service_role。`NEXT_PUBLIC_*` 值会发送到浏览器；publishable key 设计上可公开，数据保护依赖权限和 RLS。修改环境变量后重启开发服务器；生产部署需重新构建。
@@ -89,6 +90,19 @@ npm run test:isolation
 `TEST_BASE_URL` 设定后浏览器测试使用云端，不启动本地 3100 服务器。数据隔离脚本始终使用 `.env.local` 指定的 Supabase 项目；请核对它与部署使用的是同一个测试项目。
 
 GitHub 到 Vercel 的自动部署目前是可选项；连接后推送 `main` 可能触发 Production 部署，应在确实需要自动发布时再启用。Supabase 当前也不需要连接 GitHub，数据库结构以仓库中的迁移文件记录并按需人工应用。
+
+## Wiki 本地编辑与发布
+
+Wiki 位于 `wiki/`，使用 MkDocs + Material for MkDocs。正文使用 Markdown，本地编辑、预览和严格构建后再发布；当前只包含结构演示，不代表《科研论》内容已经整理或确认。
+
+```powershell
+python -m venv .venv-wiki
+.\.venv-wiki\Scripts\python.exe -m pip install -r wiki\requirements.txt
+.\.venv-wiki\Scripts\python.exe -m mkdocs serve -f wiki\mkdocs.yml
+.\.venv-wiki\Scripts\python.exe -m mkdocs build --strict -f wiki\mkdocs.yml
+```
+
+Wiki 使用独立 Vercel 项目部署，构建配置在 `wiki/vercel.json`。本地严格构建通过后运行 `npx vercel@latest --cwd wiki link` 创建独立项目，再运行 `npx vercel@latest --cwd wiki` 部署；Vercel 的 Python 构建环境由 `uv` 管理，配置使用 `uv run` 在构建时解析依赖。在项目设置中启用 Vercel Authentication 的 All Deployments。PIck 首页通过 `NEXT_PUBLIC_WIKI_URL` 链接到 Wiki；该变量未设置时默认使用本地 MkDocs 地址。Wiki 与 PIck 共用仓库，但不共享登录状态，也不把内容存入 Supabase。
 
 ## 凭据与交付
 
